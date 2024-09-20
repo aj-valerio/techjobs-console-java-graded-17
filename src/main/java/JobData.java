@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -87,15 +86,25 @@ public class JobData {
      * Search all columns for the given term
      *
      * @param value The search term to look for
-     * @return      List of all jobs with at least one field containing the value
+     * @return jobsReturned List of all jobs with at least one field containing the value
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
 
         // load data, if not already loaded
         loadData();
 
+        ArrayList<HashMap<String, String>> jobsReturned = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs){
+            for (String key : row.keySet()){
+                if (row.get(key).toLowerCase().contains(value.toLowerCase())){
+                    jobsReturned.add(row);
+                }
+            }
+        }
+
         // TODO - implement this method
-        return null;
+        return jobsReturned;
     }
 
     /**
